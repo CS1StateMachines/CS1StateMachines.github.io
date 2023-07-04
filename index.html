@@ -1,1 +1,156 @@
-hi
+<html><head>
+<title>Finite-State Machines In Early CS1</title>
+</head>
+<body>
+
+<h1>Finite-State Machines For Accessible, Compelling, and Nontrivial Assignments in Early CS1</h1>
+
+</center>
+<h2>Overview</h2>
+<p>We present three versions of an assignment we use in the first month of CS1 that only requires early-CS1 level of knowledge and experience with functions, scope, and conditionals, but is nevertheless nontrivial and compelling. We ask students to implement a finite-state machine that simulates a real-world (or close to it) scenario, with state transitions described in terms of the scenario. State transitions in real life can become fairly intricate to implement, fast. That is an advantage &mdash; students experience taking a concrete real-world scenario (rather than, say, an abstract algorithm) and implement it in code.</p>
+
+<p>In one version of the assignment, students implement a credit card processing simulator, where interest starts accruing on the month following a purchase, and a particular pattern of purchases can disable the card because of a suspicion of fraud. In another version of the assignment, students implement a student life simulator, where the effectiveness of a student's learning is affected by how much they sleep and when they consume coffee, and where a particular pattern of coffee consumption can permanently decrease the effectiveness of learning. In a third version, students implement a simulator of an app that gamifies exercise, where exercise is enjoyed more if in-app rewards are received, and too many rewards too soon get the user disinterested.
+
+
+
+<p>
+</p>
+<h2>Meta Information</h2>
+<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">Summary</td>
+      <td style="vertical-align: top;">
+		<p>Implement a finite-state machine that simulates a real-world scenario, with transitions described in terms of the scenario. State transitions in real life can become fairly intricate to implement quiet fast. 
+
+<p>In one version of the assignment, students implement a credit card processing simulator, where interest starts accruing on the month following a purchase, and a particular pattern of purchases can disable the card because of a suspicion of fraud. In another version of the assignment, students implement a student life simulator, where the effectiveness of a student's learning is affected by how much they sleep and when they consume coffee, and where a particular pattern of coffee consumption can permanently decrease the effectiveness of learning. In a third version, students implement a simulator of an app that gamifies exercise, where exercise is enjoyed more if in-app rewards are received, and too many rewards too soon get the user disinterested. A Supporting lab assignment and supporting lecture material are included.
+		
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Topics<br>
+      </td>
+      <td style="vertical-align: top;">Functions, scope, conditionals.
+     </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Audience<br>
+      </td>
+      <td style="vertical-align: top;">Early CS<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Difficulty<br>
+      </td>
+      <td style="vertical-align: top;">Fairly difficult but doable in early CS1.
+<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Strengths<br>
+      </td>
+      <td style="vertical-align: top;">
+<ul>
+<li>
+Students implement nontrivial code early in CS1
+</li>
+<li>
+Students are exposed to the idea (but not the terminology) of finite-state machines, supporting the use of FSM's later in the course, e.g. in the context of processing lists and strings
+</li>
+<li>
+Students are exposed to the idea (but not the terminology) of discrete-event simulation
+</li>
+<li>
+Students work with scope in a setting that requires it
+</li>
+<li>
+For the credit card version of the assignment, many first-year students are exposed to the fact that Morth American credit cards have a grace period before interest is charged for the first time
+</li>
+<li>
+For the gamification of exercise app version of the assignment, students are exposed to the concept of gamification, and have the opportunity to reflect on it
+</li>
+<li>
+Students practice the key skill of translating a specification written in English into code in a nontrivial setting
+</li>
+<li>
+Students need to implement and think through a nontrivial testing strategy
+</li>
+
+
+</ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Weaknesses<br>
+      </td>
+      <td style="vertical-align: top;">
+<ul>
+<li>
+As written, the assignment asks the students to work with global variables, which may encourage poor programming practices later. We choose to teach scope by using global variables since we do not cover classes until much later. Other instructors (especially if they use Java) may use instance variables where we use global variables. (We note that the structure of the code is exactly the same whether global or instance variables are used.) Yet another option is to pass around the state between all the functions; we would argue against this option, since it is further away from instance variables, which is what most would use if they have all the features of Python.
+</li>
+
+
+</ul>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="vertical-align: top;">Variants<br>
+      </td>
+      <td style="vertical-align: top;">
+<ul>
+We present three different context: a student lifestyle simulator, a credit card transaction processing simulator, and a simulation of the use of a gamified app designed to encourage exercise
+</ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+<h2>Example Handouts</h2>
+<p>
+<ul>
+	<li><b>Gamification of exercise</b>: <a href = "gamify/gamify.pdf">handout</a> (<a href = "gamify/gamify.tex">LaTeX source</a>). <a href = "gamify/gamify.py">Handout code</a>.
+	<li><b>Credit card simulation</b>: <a href = "credit/credit.pdf">handout</a> (<a href = "credit/credit.tex">LaTeX source</a>). <a href = "credit/credit.py">Handout code</a>.
+	<li><b>Student life simulator</b>: <a href = "studentlife/studentlife.pdf">handout</a> (<a href = "studentlife/studentlife.tex">LaTeX source</a>). <a href = "studentlife/workweek.py">Handout code</a>.
+
+</ul>
+<p>
+
+
+<h2>Solutions (available to instructors)</h2>
+<p>
+<ul>
+	<li><b>Gamification of exercise</b>: <a href = "gamify/gamify_soln.py">gamify_soln.py</a>, <a href = "gamify/autograder.zip"><tt>unittest</tt> autograder</a>.
+	<li><b>Credit card simulation</b>: <a href = "credit/credit_soln.py">credit_soln.py</a>, <a href = "credit/autograder.zip"><tt>unittest</tt> autograder</a>.
+	<li><b>Student life simulator</b>: <a href = "studentlife/workweek_soln.py">workweek_soln.py</a>, <a href = "studentlife/autograder.zip"><tt>unittest</tt> autograder</a>.
+
+</ul>
+<p>
+
+
+
+<h2>Supporting the assignment</h2>
+<p>Prior to working on the assignment, students work on a lab that should prepare them for it. During the lab, students write a simulator of a pocket calculator, with a memory button and an undo button. In our labs, students can extensive teaching assistant help; we also go over the model solution in lecture. 
+<ul>
+	<li><a href = "lab/lab02.pdf">Lab handout</a> (<a href = "lab/lab02.tex">LaTeX source</a>). <a href = "lab/lab02.py">Solutions</a>.
+</ul>
+
+<p>The lab is meant to prepare students to work with functions, scope, and state variables.
+
+<p>We also show examples of functions that need to keep track of state: <a href = "lecture/login_lec.html">login example</a> (<a href = "lecture/login_lec.ipynb">ipynb source</a>).
+
+
+
+
+<h2>Lessons learned</h2>
+<ul>
+<li>The teaching team should be prepared to either support students as they think through the numerours edge cases, post a more elaborate handout (at the expense of  making the student experience less like reading a spec in English and translating it into code), or arrive at some intermediate solution. We have usually posted a FAQ to go along with the assignment. We also emphasized that the handout is like a contract: students have to follow the specification, but unless the specification clearly specifies what should happen in a particular scenario, students are not responsible for handling that scenario.
+
+<li>Grading testing strategies can be challenging. We cannot expect the students to cover every possible test case (or expect the grading TAs to spot every possible test case). We arrived at asking the students to document their testing strategy, and grading the strategy together with the documentation as comprensive, almost comprhensive, good, etc. We also experimented with grading using the test coverage, but for this assignment, it does not work that well.
+</ul>
+
+</body>
+</html>
+

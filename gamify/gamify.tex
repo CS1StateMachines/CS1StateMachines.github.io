@@ -1,0 +1,449 @@
+\documentclass[11pt]{article}
+\usepackage{calc,fancyhdr,lastpage}
+\usepackage[hmargin=.75in,vmargin=1in,
+            footskip=.55in,headsep=.55in-\headheight]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+% Formats, symbols, abbreviations.
+\let\altemph\textsl
+\let\strong\textbf
+\let\code\texttt
+\let\latinabb\emph
+\newcommand*{\etc}{\latinabb{etc}}
+\newcommand*{\eg}{\latinabb{e.g.}}
+\newcommand*{\ie}{\latinabb{i.e.}}
+% To get proper-looking symbols in \texttt.
+\newcommand*{\txtbksl} {\symbol{"5C}}% \
+\newcommand*{\txtcaret}{\symbol{"5E}}% ^
+\newcommand*{\txtunder}{\symbol{"5F}}% _
+\newcommand*{\txtlcurl}{\symbol{"7B}}% {
+\newcommand*{\txtrcurl}{\symbol{"7D}}% }
+\newcommand*{\txttilde}{\symbol{"7E}}% ~
+
+% Commands \question[marks]{title} and \subquestion[marks]{title}.
+\newcounter{questionnumber}
+\newcommand*{\question}[2][]
+   {\refstepcounter{questionnumber}\section*
+    {Part \thequestionnumber.\quad
+        \ifx\empty#1\empty\else[#1 marks]\quad\fi#2}}
+\newcounter{subquestionnumber}[questionnumber]
+\renewcommand*{\thesubquestionnumber}{\alph{subquestionnumber}}
+\newcommand*{\subquestion}[2][]
+   {\refstepcounter{subquestionnumber}\subsubsection*
+    {Subpart (\thesubquestionnumber)\quad
+       \ifx\empty#1\empty\else[#1 marks]\quad\fi#2}}
+
+% Redefine `enumerate' to use less vertical space.
+\let\etaremune\enumerate
+\let\etaremunedne\endenumerate
+\renewenvironment{enumerate}
+   {\etaremune
+    \setlength{\topsep}{.25ex plus .125ex minus .1825ex}%
+    \setlength{\itemsep}{\topsep}\setlength{\parsep}{0ex}%
+    \setlength{\leftmargin}{1.75em}\setlength{\labelsep}{.5em}%
+    \setlength{\labelwidth}{1.75em}\ignorespaces}
+   {\etaremunedne}
+
+% Redefine `itemize' to use less vertical space.
+\let\ezimeti\itemize
+\let\ezimetidne\enditemize
+\renewenvironment{itemize}
+   {\ezimeti
+    \setlength{\topsep}{.25ex plus .125ex minus .1825ex}%
+    \setlength{\itemsep}{\topsep}\setlength{\parsep}{0ex}%
+    \setlength{\leftmargin}{1.75em}\setlength{\labelsep}{.5em}%
+    \setlength{\labelwidth}{1.75em}\ignorespaces}
+   {\ezimetidne}
+
+%% A heading in the instructions.
+\newcommand*{\heading}[1]{\subsubsection*{#1}}
+
+% Headings.
+\pagestyle{fancy}
+\let\headrule\empty
+\let\footrule\empty
+\lhead{{\bfseries CS1}}
+\chead{{\bfseries\large Project \#\,1
+    --- General Instructions}}
+\rhead{{\bfseries Fall 2xxx}}
+\lfoot{{Anonymous}}
+\cfoot{{}}
+\rfoot{{Page \thepage\ of \pageref{LastPage}}}
+
+
+\begin{document}
+
+\vspace*{-4.5ex}
+\noindent
+\strong{Due:  }
+\hfill
+\strong{Worth:  }
+
+
+\heading{Submitting your project}
+
+ For this project, you must hand in just one file:
+\begin{itemize}
+\item \code{gamify.py}
+\end{itemize}
+
+{}  You can resubmit a new version of the file at any time before the deadline. Your last submission will be graded.
+
+
+\heading{The \code{if \txtunder\txtunder name \txtunder\txtunder == \txtunder\txtunder"main"\txtunder\txtunder} block}
+All your testing code should be inside the \code{if \txtunder\txtunder name \txtunder\txtunder == \txtunder\txtunder"main"\txtunder\txtunder} block. All you global variables must be initialized outside of the \code{if \txtunder\txtunder name \txtunder\txtunder == \txtunder\txtunder"main"\txtunder\txtunder} block (for example, by calling \verb;initialize();.)
+
+
+\heading{Hints \& tips}
+
+\begin{itemize}
+\item
+    Start early.  Programming projects always take more time than you 
+    estimate!
+\item
+    Do not wait until the last minute to submit your code.  You can 
+    overwrite previous submissions with more recent ones, so submit early 
+    and often---a good rule of thumb is to submit every time you get one 
+    more feature implemented and tested.
+\item
+    Write your code incrementally.  Don't try to write everything at once, 
+    and then compile it.  That strategy never works.  Start off with 
+    something small that compiles, and then add functions to it gradually, 
+    making sure that it compiles every step of the way.
+\item
+    Read these instructions and make sure you understand them thoroughly 
+    before you start---ask questions if anything is unclear!
+\item
+    Inspect your code before submitting it.  Also, make sure that you 
+    submit the correct file.
+\item
+    Seek help when you get stuck!  Check the discussion board first to see 
+    if your question has already been asked and answered.  Ask your 
+    question on the discussion board if it hasn't been asked already.  Talk 
+    to your TA or your instructor.
+
+\item
+    If your email to the TA or the instructor is ``Here is my program.  
+    What's wrong with it?'', don't expect an answer!  We expect you to at 
+    least make an effort to start to debug your own code, a skill which you 
+    are meant to learn as part of this course.  And as you will discover 
+    for yourself, reading through someone else's code is a difficult 
+    process---we just don't have the time to read through and understand 
+    even a fraction of everyone's code in detail.
+
+    However, if you show us the work that you've done to narrow down the 
+    problem to a specific section of the code, why you think it doesn't 
+    work, and what you've tried to fix it, it will be much easier to 
+    provide you with the specific help you require and we will be happy to 
+    do so.
+\end{itemize}
+
+
+\heading{Correctness}
+
+We will run your functions using a Python~3 interpreter.  Please ensure that you are 
+running Python~3 as well.  To check what version of Python you are 
+running, you can run the following in your Python shell:
+\begin{verbatim}
+      import sys
+      sys.version
+\end{verbatim}
+Syntax errors in your code will cause your mark to be 0. Make sure that you submit a file that does not contain syntax errors. If the file contains syntax errors, you will see that on Gradescope right away.
+
+Note that \textbf{your functions must be implemented precisely according to the project specifications.} Their signatures should be exactly as in the project handout, and their behaviour should be exactly as specified. In particular, make sure that functions do not print anything unless the project specifications specifically demand that, and that the functions return exactly what the project handout is asking for.
+
+\heading{Documentation}
+
+When writing code, you should write documentation to describe what your code 
+is doing.  Documentation helps others and yourself understand what your 
+code is meant to do.  The general rule of thumb for documentation states 
+that you should add comments to your code in the following situations:
+\begin{itemize}
+\item
+    For every function, as a docstring, to describe the parameters of the 
+    function and what the function does.  See below for more details on 
+    docstrings.
+\item
+    Before every global variable declaration, to describe what kind of 
+    information the variable stores and what properties (if any) that 
+    information is supposed to have throughout the execution of the code.
+\item
+    Before all complicated sections of code, to help the reader understand 
+    what that code section is trying to do.
+\item
+    In general, comments should \emph{not} simply restate what the code 
+    does (this does not add any useful information to the code).  Comments 
+    should \emph{add} information that is implicit in the code, \eg, about 
+    what purpose a computation serves, or why a certain section of code is 
+    written the way it is.
+\end{itemize}
+
+\heading{Style}
+
+Good style practices should be adhered to when writing your code.  This 
+includes the following:
+\begin{itemize}
+\item
+    Use Python style conventions for your function and variable names.  In 
+    particular, please use ``pothole case'': lowercase letters with words 
+    separated by underscores (\code{\txtunder}), to improve readability.
+\item
+    Choose good names for your functions and variables.  For example, 
+    \code{num\txtunder coffee\txtunder cups} is more helpful and readable 
+    than \code{ncc}.
+\item
+    To make sure your program will be formatted correctly is never 
+    to mix spaces and tabs when indenting ---use only tabs, or only spaces.
+\item
+    Put a blank space before and after every operator.  For example:
+\begin{verbatim}
+    b = 3 > x and 4 - 5 < 32  # good style: easy to read
+    
+    b= 3>x and 4-5<32         # bad style: hard to read
+\end{verbatim}
+\item
+    Write a docstring comment for each function.  (See below for guidelines 
+    on the content of your docstrings.) 
+    Put a blank line after every docstring comment.
+\item
+    Each line must be less than 80 characters long, including tabs and 
+    spaces.  You should break up long lines using \code{\txtbksl}. 
+\item
+    Your code should be readable and readily understandable.
+\end{itemize}
+
+\heading{Guidelines for writing docstrings}
+
+\begin{itemize}
+\item  Describe precisely \emph{what} the function does.
+\item  Do not reveal \emph{how} the function does it.
+\item  Make the purpose of every parameter clear.
+\item  Refer to every parameter by name.
+\item  Be clear about whether the function returns a value, and if so, 
+    what.
+\item  Explain any conditions that the function assumes are true.  
+    Examples: ``\code{n is an int}'', ``\verb|n != 0|'', ``\code{the height 
+    and width of p are both even}''.
+\item  Be concise.
+\item  Ensure that the text you write is grammatically correct.
+\item  Write the docstring as a command (\eg, ``Return the first \ldots'') 
+    rather than a statement (\eg, ``Returns the first \ldots'').
+\end{itemize}
+
+
+\newpage
+\chead{{\bfseries\large Project \#\,1
+    --- Gamification of Exercise}}
+
+\noindent
+
+\href{https://en.wikipedia.org/wiki/Gamification}{Gamification} is the integration of elements found in games -- such as points and badges -- into non-game activities. One example of gamification is students' being awarded badges and points for completing exercises in online courses. This is done in order to encourage students to complete the exercises. Another example is supermarkets awarding points to customers for purchasing various items. This is done, in part, to induce the customers to purchase more items in order to gain more points.
+
+In this project, you will implement a simulator for an app that encourages the user to exercise more by awarding ``stars" to the user for exercising. The simulator will model how the user behaves, and could be used to try out various strategies for awarding stars.
+
+We imagine the user as accumulating ``health points" and ``fun points" (sometimes called \href{http://spot.colorado.edu/~heathwoo/Phil220/utilitarianism.html}{hedons}). Every activity is associated with gaining some number of health points and some number of hedons. Receiving a star increases the number of hedons that the user gains from performing the activity. Receiving too many stars too often makes the user lose interest in stars altogether.
+
+The simulation proceeds as a series of operations, which are simulated using calls to the functions that you will define. For example, a simulation might proceed as follows:
+
+\begin{verbatim}
+if __name__ == '__main__':
+    initialize()
+    perform_activity("running", 30)    
+    print(get_cur_hedons())            # -20 = 10 * 2 + 20 * (-2)
+    print(get_cur_health())            # 90 = 30 * 3
+    print(most_fun_activity_minute())  # resting
+    perform_activity("resting", 30)    
+    offer_star("running")              
+    print(most_fun_activity_minute())  # running
+    perform_activity("textbooks", 30)  
+    print(get_cur_health())            # 150 = 90 + 30*2
+\end{verbatim}
+
+The lines in the code above correspond to performing various activities (running, resting, carrying textbooks), for various durations of time, as well as querying the system for the number of health points and hedons that the user accumulated and querying the system for the activity that would gain the user the most hedons if it were performed for one minute.
+
+We assume that the user is always either running, carrying textbooks, or resting.
+
+The user accumulates hedons and health points according to the following rules.
+
+\begin{itemize}
+	\item The user starts out with 0 health points, and 0 hedons.
+	\item The user is always either running, carrying textbooks, or resting.
+	\item Running gives 3 health points per minute for up to $180$ minutes, and 1 health point per minute for every minute over $180$ minutes that the user runs. (Note that if the user runs for $90$ minutes, then rests for $10$ minutes, then runs for $110$ minutes, the user will get $600$ health points, since they rested in between the times that they ran.)
+	\item Carrying textbooks always gives 2 health points per minute.
+
+	\item Resting gives 0 hedons per minute.
+
+	\item Both running and carrying textbooks give -2 hedons per minute if the user is tired and isn't using a star (definition: the user is tired if they finished running or carrying textbooks less than 2 hours before the current activity started.) For example, for the purposes of this rule, the user will be tired if they run for 2 minutes, and then start running again straight away.
+	\item If the user is not tired, running gives 2 hedons per minute for the first 10 minutes of running, and -2 hedons per minute for every minute after the first 10.
+	\item If the user is not tired, carrying textbooks gives 1 hedon per minute for the first 20 minutes, and -1 hedon per minute for every minute after the first 20.
+
+	\item If a star is offered for a particular activity and the user takes the star right away, the user gets an additional 3 hedons per minute for at most 10 minutes. Note that the user only gets 3 hedons per minute for the first activity they undertake, and do not get the hedons due to the star if they decide to keep performing the activity:
+\begin{verbatim}
+	offer_star("running")
+	perform_activity("running", 5)  # gets extra hedons
+	perform_activity("running", 2)  # no extra hedons
+\end{verbatim}
+
+	\item If three stars are offered within the span of 2 hours, the user loses interest, and will not get additional hedons due to stars for the rest of the simulation.
+\end{itemize}
+
+
+\newpage
+
+\noindent Here is a  sample output of a simulation, along with comments explaining the output.
+\begin{verbatim}
+if __name__ == '__main__':
+    initialize()
+    perform_activity("running", 30)    
+    print(get_cur_hedons())            # -20 = 10 * 2 + 20 * (-2)
+    print(get_cur_health())            # 90 = 30 * 3
+    print(most_fun_activity_minute())  # resting
+    perform_activity("resting", 30)    
+    offer_star("running")              
+    print(most_fun_activity_minute())  # running
+    perform_activity("textbooks", 30)  
+    print(get_cur_health())            # 150 = 90 + 30*2
+    print(get_cur_hedons())            # -80 = -20 + 30 * (-2)
+    offer_star("running")
+    perform_activity("running", 20)
+    print(get_cur_health())            # 210 = 150 + 20 * 3
+    print(get_cur_hedons())            # -90 = -80 + 10 * (3-2) + 10 * (-2)
+    perform_activity("running", 170)
+    print(get_cur_health())            # 700 = 210 + 160 * 3 + 10 * 1
+    print(get_cur_hedons())            # -430 = -90 + 170 * (-2)
+    
+
+\end{verbatim}
+
+
+{}  We provide you with a ``starter'' version of \code{gamify.py}---a 
+skeleton of the code you will have to write, with some parts already 
+filled in.  Please read it carefully and make sure you understand 
+everything in the starter code \altemph{before} you start making changes! 
+You must not change the function signatures. 
+
+
+
+\question{}
+
+Implement the following functions in \code{gamify.py}.  Note that the 
+names of the functions are case-sensitive and must not be changed.  You are 
+not allowed to change the number of input parameters.  Doing so will cause 
+your code to fail when run with our testing programs, so that you will not 
+get any marks for functionality.
+
+Note that ``iff" means ``if and only if." When we say that a function \verb;f; returns True iff condition \verb;c; holds, we mean that \verb;f; returns \verb;True; if \verb;c; holds, and \verb;False; if it doesn't hold.
+
+\subquestion
+	{\code{get\txtunder cur\txtunder hedons()}}
+
+This function returns the number of hedons that the user has accumulated so far.
+
+\subquestion
+	{\code{get\txtunder cur\txtunder health()}}
+
+This function returns the number of health points that the user has accumulated so far.
+
+\subquestion
+	{\code{offer\txtunder star(activity)}}
+
+This function simulates a offering the user a star for engaging in the exercise \verb;activity;. Assume \verb;activity; is a string, one of \verb;"running";, \verb;"textbooks";, or \verb;"resting";.
+
+\subquestion
+	{\code{perform\txtunder activity(activity, duration)}}
+
+The function simulates the user's performing activity \verb;activity; for \verb;duration; minutes. Assume \verb;duration; is a positive \verb;int;. If \verb;activity; is not one of \verb;"running";, \verb;"textbooks";, or \verb;"resting";, running the function should have no effect.
+
+\subquestion
+	{\code{star\txtunder can\txtunder be\txtunder taken(activity)}}
+The function returns \verb;True; iff a star can be used to get more hedons for activity \verb;activity;. A star can only be taken if no time passed between the star's being offered and the activity, \textit{and} the user is not bored with stars, \textit{and} the star was offered for activity \verb;activity;.
+
+\subquestion
+	{\code{most\txtunder fun\txtunder activity\txtunder minute()}}
+The function returns the activity (one of \verb;"resting";, \verb;"running";, or \verb;"textbooks";) which would give the most hedons if the person performed it for one minute at the current time.
+
+\subquestion
+	{\code{initialize()}}
+The function initialize all the global variables in the program. The following code should run two independent simulations, with both \verb;SIMULATION 1; and \verb;SIMULATION 2; starting from the beginning.
+\begin{verbatim}
+initialize()
+# SIMULATION 1 CODE
+#. ...
+
+intiailize()
+# SIMLUATION 2 CODE
+# ...
+\end{verbatim}
+
+\question{}
+
+In the \verb;if  __name__ == "__main__"; block, add code that tests your functions. While you may run large simulations as well, your job is to come up with a testing strategy that ensures that your code works according to the project specifications. This is best done by testing every individual aspect of the behaviour of the code. Add comments to clarify the testing strategy: the goal is to make sure that it is possible to look at the testing code that you wrote and the comments that you have added, and be convinced that you have tested for all the categories of the typical cases, and all the categories of the boundary/edge cases. 
+
+
+\section{FAQ}
+
+\subsection{What happens if the user starts running again right after they finish? Is this relevant elsewhere?}
+
+For running, the user gets 3 health points per minute for 180 minutes, and 1 health point per minute afterwards. The clock gets reset if the user carries textbooks or rests, even for one minute. For example:
+
+\begin{verbatim}
+perform_activity("running", 120)
+perform_activity("running", 30)
+perform_activity("running", 50)
+\end{verbatim}
+Here, the user will get $3\times 180+1\times 20$ health points in total.
+
+On the other hand, in
+
+\begin{verbatim}
+perform_activity("running", 150)
+perform_activity("textbooks", 1)
+perform_activity("running", 50)
+\end{verbatim}
+The user will get $200\times3$ health points for running, and 2 health points for carrying textbooks.
+
+This is not relevant for hedons calculations. In the examples above, the user is considered tired fo every activity except the first one.
+
+
+\subsection{Is a third star offered within the span of two hours effective?}
+No. The user becomes bored once a third star is offered within the span of two hours, and so it's ineffective. Three stars within the span of two hours make stars ineffective
+
+\subsection{If a stars is offered at 8am, 9am, and 10am, does that make stars ineffective?}
+No, but if they were offered at 8am, 9am, and 9:59am, then they would be ineffective.
+
+
+\subsection{If the user is tired, how many hedons will they get per minute if they take a star?}
+1 = -2+3
+
+\subsection{If the user runs for 5 minutes (taking a star for running), and then runs for 3 more minutes, do they get the +3 hedons/minute bonus for all the 8 minutes?}
+
+No, just for the first 5 minutes -- the second run doesn't count. Stars need to be used right away, by performing the activity for which they are offered, if they are used at all
+
+\subsection{Can stars be given for resting?}
+Assume that doesn't happen
+
+\subsection{Can two stars be given at the same time?}
+Assume that doesn't happen.
+
+
+\subsection{Can duration in \texttt{perform\_activity} be 0? Can duration be fractional?}
+
+Assume duration is an integer greater than 0.
+
+
+\subsection{I haven't used any loops in my solutions. Is anything wrong?}
+
+It's possible to complete the project without using loops. In fact, I haven't used any loops in my solution, and I don't think on the whole using loops would make your life easier in Project 1.
+
+\subsection{Does resting always give 0 hedons and 0 health points?}
+
+Yes
+
+\subsection{What happens if we \texttt{perform\_activity("textbooks", 150)}? Does the user get tired?}
+
+We won't test for that in our test code. (However,  \texttt{perform\_activity("running", 150)} is fair game and can be tested for -- what happens in that case is specified in the handout)
+
+
+
+\end{document}

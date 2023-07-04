@@ -1,0 +1,180 @@
+\documentclass[11pt]{article}
+\usepackage{calc,fancyhdr,lastpage}
+\usepackage{listings}
+\usepackage[hmargin=.75in,vmargin=1in,
+            footskip=.55in,headsep=.55in-\headheight]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+
+% Formats, symbols, abbreviations.
+\let\altemph\textsl
+\let\strong\textbf
+\let\code\texttt
+\let\latinabb\emph
+\newcommand*{\etc}{\latinabb{etc}}
+\newcommand*{\eg}{\latinabb{e.g.}}
+\newcommand*{\ie}{\latinabb{i.e.}}
+% To get proper-looking symbols in \texttt.
+\newcommand*{\txtbksl} {\symbol{"5C}}% \
+\newcommand*{\txtcaret}{\symbol{"5E}}% ^
+\newcommand*{\txtunder}{\symbol{"5F}}% _
+\newcommand*{\txtlcurl}{\symbol{"7B}}% {
+\newcommand*{\txtrcurl}{\symbol{"7D}}% }
+\newcommand*{\txttilde}{\symbol{"7E}}% ~
+
+% Commands \question[marks]{title} and \subquestion[marks]{title}.
+\newcounter{questionnumber}
+\newcommand*{\question}[2][]
+   {\refstepcounter{questionnumber}\section*
+    {Question \thequestionnumber.\quad
+        \ifx\empty#1\empty\else[#1 marks]\quad\fi#2}}
+\newcounter{subquestionnumber}[questionnumber]
+\renewcommand*{\thesubquestionnumber}{\alph{subquestionnumber}}
+\newcommand*{\subquestion}[2][]
+   {\refstepcounter{subquestionnumber}\subsubsection*
+    {Part (\thesubquestionnumber)\quad
+       \ifx\empty#1\empty\else[#1 marks]\quad\fi#2}}
+
+% Redefine `enumerate' to use less vertical space.
+\let\etaremune\enumerate
+\let\etaremunedne\endenumerate
+\renewenvironment{enumerate}
+   {\etaremune
+    \setlength{\topsep}{.25ex plus .125ex minus .1825ex}%
+    \setlength{\itemsep}{\topsep}\setlength{\parsep}{0ex}%
+    \setlength{\leftmargin}{1.75em}\setlength{\labelsep}{.5em}%
+    \setlength{\labelwidth}{1.75em}\ignorespaces}
+   {\etaremunedne}
+
+% Redefine `itemize' to use less vertical space.
+\let\ezimeti\itemize
+\let\ezimetidne\enditemize
+\renewenvironment{itemize}
+   {\ezimeti
+    \setlength{\topsep}{.25ex plus .125ex minus .1825ex}%
+    \setlength{\itemsep}{\topsep}\setlength{\parsep}{0ex}%
+    \setlength{\leftmargin}{1.75em}\setlength{\labelsep}{.5em}%
+    \setlength{\labelwidth}{1.75em}\ignorespaces}
+   {\ezimetidne}
+
+%% A heading in the instructions.
+\newcommand*{\heading}[1]{\subsubsection*{#1}}
+
+% Headings.
+\pagestyle{fancy}
+\let\headrule\empty
+\let\footrule\empty
+\lhead{{\bfseries CS1}}
+\chead{{\bfseries\large Lab \#2}}
+\rhead{{\bfseries Fall 2xxx}}
+\lfoot{{Anonymous}}
+\cfoot{{}}
+\rfoot{{Page \thepage\ of \pageref{LastPage}}}
+
+
+\begin{document}
+\lstset{language=Python}
+
+For this lab, you will write a simple pocket calculator program. The program will be able
+to display the current value on the screen of the calculator. You will store the current
+value of the calculator in a variable. The initial value of the calculator (i.e., the initial
+current value) is 0.
+Do not write out the entire lab assignment and only then try to debug it: this almost never
+works. If you're new to programming, you shouldn't, as a rule, write more than five lines
+of code between trying the new code out to see if it does something sensible.
+You will get credit for the lab if you make reasonable progress toward completing it.
+Credit may be given for programs that accomplish only some of the tasks assigned.
+The TAs are here to help you. If you are stuck, ask for help!
+
+\question{Warmup}
+
+\textit{If you are confident about functions, global and local variables, and the distinction between print and return, you may skip this question and proceed to Question 2.}
+
+Start with the following code in Pyzo:
+
+\begin{verbatim}
+def my_sqrt(x):
+    sqr = x**.5
+    return sqr	
+	
+if __name__ == "__main__":
+    res = my_sqrt(25)
+	
+\end{verbatim}
+
+\subquestion{}
+When you run this code, nothing is output to the screen. Explain why. Now, add a line of code inside the \texttt{main} block so that the result of the computation in \texttt{my\_sqrt} is printed.
+
+\subquestion{}
+If you add the line \texttt{print(sqr)} inside the \texttt{main} block, running the program produces an error. Explain why.
+
+How can you modify the function \texttt{my\_sqrt} so that \texttt{print(sqr)} doesn't produce an error?
+
+\subquestion{}
+Write a function with the signature \texttt{my\_print\_square(x)} which \textbf{prints} (rather than returns) the square of the argument \texttt{x}. Call this function from the \texttt{main} block, and explain the difference between the effect of calling \texttt{my\_print\_square(x)} and calling \texttt{my\_sqrt(x)}.
+
+What is the output for the following code, if it is run from within the main block? Explain.
+
+\begin{verbatim}
+	res = my_print_square(25)
+	print(res)
+\end{verbatim}
+
+\question{Welcome Message}
+
+In the \verb;if __name__ == "__main__";  block, write code that displays the following:
+\begin{verbatim}
+Welcome to the calculator program.
+Current value: 0
+\end{verbatim}
+
+
+
+
+
+\question{Displaying the Current Value}
+Write a function whose signature is
+\verb;display_current_value();,
+and which displays the current value in the calculator. In the  \verb;if __name__ == "__main__";  block, test this function by
+calling it and observing the output.
+
+\question{Addition}
+
+Write a function whose signature is \verb;add(to_add);, and which adds \verb;to_add; to the current value in the calculator, and modifies the current value accordingly. In the  \verb;if __name__ == "__main__’";  block, test the function \verb;add; by calling it, as well as by calling \verb;display_current_value();. \textbf{Hint}: when modifying global variables
+from within functions, remember to declare them as \verb;global;.
+
+
+\question{Multiplication}
+Write a function whose signature is \verb;mult(to_mult);, and which multiplies  the current value in the calculator  by \verb;to_mult;, and modifies the current value accordingly. In the  \verb;if __name__ == "__main__";  block, test the function.
+
+\question{Division}
+Write a function whose signature is \verb;div(to_div);, and which divides  the current value in the calculator  by \verb;to_div;, and modifies the current value accordingly. In the  \verb;if __name__ == "__main__";  block, test the function.  What values
+of \verb;to_div; might cause problems? Try them to see what happens.
+
+
+\question{Memory and Recall}
+Pocket calculators usually have a memory and a recall button. The memory button
+saves the current value and the recall button restores the saved value. Implement
+this functionality.
+
+\question{Undo}
+Implement a function that simulates the Undo button: the function restores the
+previous value that appeared on the screen before the current one.
+
+Pressing the Undo twice restores the original value:
+
+\begin{verbatim}
+    # current value: 25
+    add(5)	# current value: 30
+    mult(2) # current value: 60
+    undo()  # current value: 30
+    undo()  # current value: 60
+    undo()  # current value: 30
+\end{verbatim}
+
+
+
+
+\end{document}

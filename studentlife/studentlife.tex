@@ -1,0 +1,325 @@
+\documentclass[11pt]{article}
+\usepackage{calc,fancyhdr,lastpage}
+\usepackage[hmargin=.75in,vmargin=1in,
+            footskip=.55in,headsep=.55in-\headheight]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+% Formats, symbols, abbreviations.
+\let\altemph\textsl
+\let\strong\textbf
+\let\code\texttt
+\let\latinabb\emph
+\newcommand*{\etc}{\latinabb{etc}}
+\newcommand*{\eg}{\latinabb{e.g.}}
+\newcommand*{\ie}{\latinabb{i.e.}}
+% To get proper-looking symbols in \texttt.
+\newcommand*{\txtbksl} {\symbol{"5C}}% \
+\newcommand*{\txtcaret}{\symbol{"5E}}% ^
+\newcommand*{\txtunder}{\symbol{"5F}}% _
+\newcommand*{\txtlcurl}{\symbol{"7B}}% {
+\newcommand*{\txtrcurl}{\symbol{"7D}}% }
+\newcommand*{\txttilde}{\symbol{"7E}}% ~
+
+% Commands \question[marks]{title} and \subquestion[marks]{title}.
+\newcounter{questionnumber}
+\newcommand*{\question}[2][]
+   {\refstepcounter{questionnumber}\section*
+    {Part \thequestionnumber.\quad
+        \ifx\empty#1\empty\else[#1 marks]\quad\fi#2}}
+\newcounter{subquestionnumber}[questionnumber]
+\renewcommand*{\thesubquestionnumber}{\alph{subquestionnumber}}
+\newcommand*{\subquestion}[2][]
+   {\refstepcounter{subquestionnumber}\subsubsection*
+    {Subpart (\thesubquestionnumber)\quad
+       \ifx\empty#1\empty\else[#1 marks]\quad\fi#2}}
+
+% Redefine `enumerate' to use less vertical space.
+\let\etaremune\enumerate
+\let\etaremunedne\endenumerate
+\renewenvironment{enumerate}
+   {\etaremune
+    \setlength{\topsep}{.25ex plus .125ex minus .1825ex}%
+    \setlength{\itemsep}{\topsep}\setlength{\parsep}{0ex}%
+    \setlength{\leftmargin}{1.75em}\setlength{\labelsep}{.5em}%
+    \setlength{\labelwidth}{1.75em}\ignorespaces}
+   {\etaremunedne}
+
+% Redefine `itemize' to use less vertical space.
+\let\ezimeti\itemize
+\let\ezimetidne\enditemize
+\renewenvironment{itemize}
+   {\ezimeti
+    \setlength{\topsep}{.25ex plus .125ex minus .1825ex}%
+    \setlength{\itemsep}{\topsep}\setlength{\parsep}{0ex}%
+    \setlength{\leftmargin}{1.75em}\setlength{\labelsep}{.5em}%
+    \setlength{\labelwidth}{1.75em}\ignorespaces}
+   {\ezimetidne}
+
+%% A heading in the instructions.
+\newcommand*{\heading}[1]{\subsubsection*{#1}}
+
+% Headings.
+\pagestyle{fancy}
+\let\headrule\empty
+\let\footrule\empty
+\lhead{{\bfseries CS1}}
+\chead{{\bfseries\large Project \#\,1
+    --- General Instructions}}
+\rhead{{\bfseries Fall 2xxx}}
+\lfoot{{Anonymous}}
+\cfoot{{}}
+\rfoot{{Page \thepage\ of \pageref{LastPage}}}
+
+
+\begin{document}
+
+\vspace*{-4.5ex}
+\noindent
+\strong{Due:  }
+\hfill
+\strong{Worth:  }
+
+
+\heading{Submitting your project}
+
+ For this project, you must hand in just one file:
+\begin{itemize}
+\item \code{workweek.py}
+\end{itemize}
+
+{}  You can resubmit a new version of the file at any time before the deadline. Your last submission will be graded.
+
+
+\heading{The \code{if \txtunder\txtunder name \txtunder\txtunder == \txtunder\txtunder"main"\txtunder\txtunder} block}
+All your testing code should be inside the \code{if \txtunder\txtunder name \txtunder\txtunder == \txtunder\txtunder"main"\txtunder\txtunder} block. All you global variables must be initialized outside of the \code{if \txtunder\txtunder name \txtunder\txtunder == \txtunder\txtunder"main"\txtunder\txtunder} block (for example, by calling \verb;initialize();.)
+
+
+\heading{Hints \& tips}
+
+\begin{itemize}
+\item
+    Start early.  Programming projects always take more time than you 
+    estimate!
+\item
+    Do not wait until the last minute to submit your code.  You can 
+    overwrite previous submissions with more recent ones, so submit early 
+    and often---a good rule of thumb is to submit every time you get one 
+    more feature implemented and tested.
+\item
+    Write your code incrementally.  Don't try to write everything at once, 
+    and then compile it.  That strategy never works.  Start off with 
+    something small that compiles, and then add functions to it gradually, 
+    making sure that it compiles every step of the way.
+\item
+    Read these instructions and make sure you understand them thoroughly 
+    before you start---ask questions if anything is unclear!
+\item
+    Inspect your code before submitting it.  Also, make sure that you 
+    submit the correct file.
+\item
+    Seek help when you get stuck!  Check the discussion board first to see 
+    if your question has already been asked and answered.  Ask your 
+    question on the discussion board if it hasn't been asked already.  Talk 
+    to your TA or your instructor.
+
+\item
+    If your email to the TA or the instructor is ``Here is my program.  
+    What's wrong with it?'', don't expect an answer!  We expect you to at 
+    least make an effort to start to debug your own code, a skill which you 
+    are meant to learn as part of this course.  And as you will discover 
+    for yourself, reading through someone else's code is a difficult 
+    process---we just don't have the time to read through and understand 
+    even a fraction of everyone's code in detail.
+
+    However, if you show us the work that you've done to narrow down the 
+    problem to a specific section of the code, why you think it doesn't 
+    work, and what you've tried to fix it, it will be much easier to 
+    provide you with the specific help you require and we will be happy to 
+    do so.
+\end{itemize}
+
+
+\heading{Correctness}
+
+We will run your functions using a Python~3 interpreter.  Please ensure that you are 
+running Python~3 as well.  To check what version of Python you are 
+running, you can run the following in your Python shell:
+\begin{verbatim}
+      import sys
+      sys.version
+\end{verbatim}
+Syntax errors in your code will cause your mark to be 0. Make sure that you submit a file that does not contain syntax errors. If the file contains syntax errors, you will see that on Gradescope right away.
+
+Note that \textbf{your functions must be implemented precisely according to the project specifications.} Their signatures should be exactly as in the project handout, and their behaviour should be exactly as specified. In particular, make sure that functions do not print anything unless the project specifications specifically demand that, and that the functions return exactly what the project handout is asking for.
+
+\heading{Documentation}
+
+When writing code, you should write documentation to describe what your code 
+is doing.  Documentation helps others and yourself understand what your 
+code is meant to do.  The general rule of thumb for documentation states 
+that you should add comments to your code in the following situations:
+\begin{itemize}
+\item
+    For every function, as a docstring, to describe the parameters of the 
+    function and what the function does.  See below for more details on 
+    docstrings.
+\item
+    Before every global variable declaration, to describe what kind of 
+    information the variable stores and what properties (if any) that 
+    information is supposed to have throughout the execution of the code.
+\item
+    Before all complicated sections of code, to help the reader understand 
+    what that code section is trying to do.
+\item
+    In general, comments should \emph{not} simply restate what the code 
+    does (this does not add any useful information to the code).  Comments 
+    should \emph{add} information that is implicit in the code, \eg, about 
+    what purpose a computation serves, or why a certain section of code is 
+    written the way it is.
+\end{itemize}
+
+\heading{Style}
+
+Good style practices should be adhered to when writing your code.  This 
+includes the following:
+\begin{itemize}
+\item
+    Use Python style conventions for your function and variable names.  In 
+    particular, please use ``pothole case'': lowercase letters with words 
+    separated by underscores (\code{\txtunder}), to improve readability.
+\item
+    Choose good names for your functions and variables.  For example, 
+    \code{num\txtunder coffee\txtunder cups} is more helpful and readable 
+    than \code{ncc}.
+\item
+    To make sure your program will be formatted correctly is never 
+    to mix spaces and tabs when indenting ---use only tabs, or only spaces.
+\item
+    Put a blank space before and after every operator.  For example:
+\begin{verbatim}
+    b = 3 > x and 4 - 5 < 32  # good style: easy to read
+    
+    b= 3>x and 4-5<32         # bad style: hard to read
+\end{verbatim}
+\item
+    Write a docstring comment for each function.  (See below for guidelines 
+    on the content of your docstrings.) 
+    Put a blank line after every docstring comment.
+\item
+    Each line must be less than 80 characters long, including tabs and 
+    spaces.  You should break up long lines using \code{\txtbksl}. 
+\item
+    Your code should be readable and readily understandable.
+\end{itemize}
+
+\heading{Guidelines for writing docstrings}
+
+\begin{itemize}
+\item  Describe precisely \emph{what} the function does.
+\item  Do not reveal \emph{how} the function does it.
+\item  Make the purpose of every parameter clear.
+\item  Refer to every parameter by name.
+\item  Be clear about whether the function returns a value, and if so, 
+    what.
+\item  Explain any conditions that the function assumes are true.  
+    Examples: ``\code{n is an int}'', ``\verb|n != 0|'', ``\code{the height 
+    and width of p are both even}''.
+\item  Be concise.
+\item  Ensure that the text you write is grammatically correct.
+\item  Write the docstring as a command (\eg, ``Return the first \ldots'') 
+    rather than a statement (\eg, ``Returns the first \ldots'').
+\end{itemize}
+
+
+\newpage
+\chead{{\bfseries\large Project \#\,1
+    --- Student Life Simulator}}
+
+\noindent
+For this assignment, you will implement an (incomplete, unfair, and unrepresentative) simulator of an engineering student's life during the work week from Monday at 12AM (i.e., midnight just after Sunday ends) through Friday at 5PM. You will keep track of the amount of knowledge (in units of knowledge called
+``knols") the student accumulates during the work week, of how many hours the student has spent sleeping during the week, and of whether the student is alert or not. During a given lecture, the student is alert if at least one of the following is true at the \textbf{start} of the lecture:
+\begin{enumerate}
+	\item the student has spent \textbf{more than} (note: that’s ``strictly more than", not ``more than or exactly") 30\% of the work week so far sleeping, \textit{or}
+	
+	\item the student has had coffee \textbf{less than} one hour before commencing the activity
+\end{enumerate}
+
+
+on the condition that they have not rendered themselves not alert for the rest of the week by drinking coffee twice in a period of less than three hours. If the student drinks a second cup of coffee in a period of less than three hours, they stop being alert and cannot become alert for the rest of the week. So for
+example, if the student has had coffee at 2PM and then at 5PM, they can still be alert, but if they have
+coffee at 2PM and then at 3PM (or any other time earlier than 5PM, including immediately after the first
+cup), they can’t become alert again for the rest of the week.
+
+If the student is alert at the start of the lecture, they obtain 4 knols per hour while attending
+lectures in the subject \texttt{"CSC"}, 2 knols per hour while attending lectures in the subjects \texttt{"MAT"}, \texttt{"PHY"},\texttt{"ESC"}, and \texttt{"CIV"}, and 0 knols if the subject is none of the above (e.g., \texttt{"csc"}, \texttt{"cSC"}, \texttt{"aaaa"},
+and \texttt{"CSC100"} are none of the above -- valid course codes are written in all caps and with no digits). If the
+student is not alert at the start of the lecture, they obtain half the amount of knols they would obtain if
+they had been alert (i.e., 2 knol/hr for \texttt{"CSC"}, 1 knol/hr for the other listed courses, 0 for the rest). The
+alertness state is determined at the start of the lecture and does not change during the lecture -- because
+all of the instructors are thoroughly captivating, of course!
+
+The simulation might proceed as follows (the descriptions of the functions are given below) -- keep in
+mind that this is just one possible example of using the simulator:
+
+\begin{verbatim}
+  sleep(8)                  # sleep from 12AM to 8AM on Monday
+  attend_lecture("CSC", 2)  # attend the CSC lecture for 2 hours,
+                            # gain 2*4 = 8 knols
+  attend_lecture("MAT", 30) # attend the MAT lecture for 30 hours,
+                            # gain 30*2 = 60 knols (note that since the student
+                            # was alert at the start of the lecture, they gain
+                            # two knols per hour for the entire 30 hours)
+  print(get_knol_amount())  # should print 68
+  print(get_hours_left())   # should print 73 (since 73 = 24 * 5 - 7 - 40)
+\end{verbatim}
+
+
+In the simulation, the activities (sleeping, attending lecture, or drinking coffee) occur immediately one
+after the other in the order in which the functions corresponding to the events are called
+
+We provide you with a ``starter" version of \texttt{workweek.py} -- a skeleton of the code you will have to write,
+with some parts already filled in. Please read it carefully and make sure you understand everything in the
+starter code before you start making changes!
+
+\newpage
+
+\question{}
+
+Implement the following functions in \texttt{workweek.py}. Note that the names of the functions are case-sensitive
+and must not be changed. You are not allowed to change the number of input parameters. Doing so
+will cause your code to fail when run with our testing programs, so that you will not get any marks for
+functionality.
+
+\subquestion{\texttt{knols\_per\_hour(subj, is\_cur\_alert)}}
+This function returns the number of knols per hour the student can obtain by studying subject \texttt{subj}.
+\texttt{is\_cur\_alert} is \texttt{True} iff the student is alert at the start of the lecture.	
+
+\subquestion{\texttt{attend\_lecture(subj, hrs)}}
+This function simulates attending a lecture in subject \texttt{subj} for \texttt{hrs} hours, if there are enough hours left in
+the work week (which ends on Friday at 5PM). You may assume that \texttt{hrs} is an integer.
+If there is not enough time left in the week to attend the lecture for \texttt{hrs} hours, \texttt{attend\_lecture} has
+no effect. If \texttt{hrs} is negative, \texttt{attend\_lecture} has no effect.
+
+
+\subquestion{\texttt{drink\_coffee()}}
+This function simulates drinking coffee. Drinking coffee does not take up time (in other words, it takes 0
+hours). If the student drinks two cups of coffee in a period of less than three hours, they stop being alert,
+and cannot become alert again during the week.
+
+\subquestion{{is\_alert()}}
+
+This function returns \texttt{True} if the student is currently alert (\texttt{False} otherwise), according to the rules
+specified above.
+
+\subquestion{get\_knol\_amount()}
+
+This function returns the number of knols the student has accumulated so far.
+
+\question{}
+
+In the \verb;if  __name__ == "__main__"; block, add code that tests your functions. While you may run large simulations as well, your job is to come up with a testing strategy that ensures that your code works according to the project specifications. This is best done by testing every individual aspect of the behaviour of the code. Add comments to clarify the testing strategy: the goal is to make sure that it is possible to look at the testing code that you wrote and the comments that you have added, and be convinced that you have tested for all the categories of the typical cases, and all the categories of the boundary/edge cases. 
+
+
+
+\end{document}
